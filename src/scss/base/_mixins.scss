@@ -1,4 +1,8 @@
-/** Media Queries **/
+/** Media Queries 
+
+los mixins son nuestras herramientas
+
+**/
 @mixin telefono {
     @media (min-width: #{$telefono}) {
         @content;
@@ -20,4 +24,19 @@
     display: grid;
     gap: $espaciado;
     grid-template-columns: repeat($columnas, 1fr);
+}
+
+@mixin boton($bgcolor, $display){
+    background-color: $bgcolor;
+    color: $blanco;
+    font-weight: $bold;
+    display: $display;
+    text-decoration: none;
+    padding: 1rem 3rem;
+    text-align: center;
+    margin-top: 2.5rem;
+
+    &:hover{
+        background-color: darken($bgcolor,5); //darken para oscurecer un poco el color que tiene agregado
+    }
 }
