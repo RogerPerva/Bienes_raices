@@ -35,8 +35,10 @@ los mixins son nuestras herramientas
     padding: 1rem 3rem;
     text-align: center;
     margin-top: 2.5rem;
+    border: none;
 
     &:hover{
         background-color: darken($bgcolor,5); //darken para oscurecer un poco el color que tiene agregado
+        cursor: pointer;
     }
 }

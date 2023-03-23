@@ -1,0 +1,43 @@
+
+.formulario{
+    p{
+        font-size: 2.4rem;
+        color: $grisOscuro;
+        margin: 2rem 0 0 0;
+    }
+
+    legend{
+        font-size: 2rem;
+        color:$grisOscuro;
+    }
+
+    label{
+        display: block;
+        font-weight: $bold;
+        text-transform: uppercase;
+    }
+
+    input:not([type="submit"]),
+    textarea,
+    select  { //Selector de atributo, va aplicar las siguientes reglas excepto a el tipo seleccionado
+        padding: 1rem;
+        display: block;
+        width: 90%;
+        background-color: $blanco;
+        border-radius: 1rem;
+        border: 1px solid $gris;
+        margin: 2rem;
+   }
+
+
+   .forma-contacto{
+    max-width: 30rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   }
+   input[type="radio"]{
+    margin: 0;
+    width: auto;
+   }
+}
