@@ -1,0 +1,28 @@
+.testimonial{
+    background-color: $verde;
+    font-size: 2.4rem;
+    padding: 2rem;
+    color:$blanco;
+    border-radius: 1rem;
+    
+    blockquote{
+        padding-left: 5rem;
+        position: relative; //para agregar las comillas tenemos que poner la posicion relativa (continua punto 2)
+
+        &::before{ //este pseudoelemento se coloca antes del blockquote, tambien tenemos el ::after
+            content: '';
+            background-image: url(../img/comilla.svg);
+            background-repeat: no-repeat;
+            width: 6rem;
+            height: 6rem;
+            display: block;
+            position: absolute;  //(Punto2) y aqui necesitamos poner el position absolute.
+            left: -2rem;
+        }
+    }
+    p{
+        text-align: right;
+        color:$blanco;
+
+    }
+}
