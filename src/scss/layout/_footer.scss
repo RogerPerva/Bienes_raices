@@ -2,9 +2,16 @@
     padding: 2.5rem;
     background-color: $grisOscuro;
     margin-bottom: 0;
-
+   
     .contenedor-footer{
         padding-top: 2.5rem;
+    }
+
+    .navegacion{
+        visibility:visible;
+        opacity:1;
+        height: auto;
+        
     }
 
     .copyright{
