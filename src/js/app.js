@@ -5,6 +5,22 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 function darkMode(){
+    const prefiereDarkMode = window.matchMedia('(prefers-color-scheme:dark)'); //Aqui nos lee si tenemos activado el darkmode en el sistema o no.
+     console.log(prefiereDarkMode.matches);
+    if(prefiereDarkMode){ 
+        document.body.classList.add('dark-mode'); //si lo tenemos activado nos agregara el darkmode.
+    }else {
+        document.body.classList.remove('dark-mode');
+    }
+    
+    prefiereDarkMode.addEventListener('change', function(){
+        if(prefiereDarkMode){ 
+            document.body.classList.add('dark-mode'); //si lo tenemos activado nos agregara el darkmode.
+        }else {
+            document.body.classList.remove('dark-mode');
+        }
+    })
+
     const botonDarkMode=document.querySelector('.dark-mode-boton');
 
     botonDarkMode.addEventListener('click', function(){
