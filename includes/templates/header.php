@@ -1,3 +1,7 @@
+<?php    ini_set('display_errors', 1);
+         ini_set('display_startup_errors', 1);
+         error_reporting(E_ALL);
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,15 +15,15 @@
 <header class="header <?php echo $inicio?'inicio':''; ?>">
         <div class="contenedor contenido-header">
             <div class="barra">
-                <a href="index.php" class="logo">
-                    <img src="build/img/logo.svg" alt="logotipo de bienes raices" >
+                <a href="/bienesraices/index.php" class="logo">
+                    <img src="/bienesraices/build/img/logo.svg" alt="logotipo de bienes raices" >
                 </a>
 
                 <div class="mobile-menu">
-                    <img src="build/img/barras.svg" alt="icono menu responsive">
+                    <img src="/bienesraices/build/img/barras.svg" alt="icono menu responsive">
                 </div>
                 <div class="derecha">
-                <img src="build/img/dark-mode.svg" alt="dark-mode-boton" class="dark-mode-boton">
+                <img src="/bienesraices/build/img/dark-mode.svg" alt="dark-mode-boton" class="dark-mode-boton">
                     <nav class="navegacion">
                         <a href="nosotros.php">Nosotros</a>
                         <a href="anuncios.php">Anuncio</a>
