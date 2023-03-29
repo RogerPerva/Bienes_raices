@@ -7,6 +7,10 @@
     error_reporting(E_ALL);
     require '../../includes/config/database.php';
     $db = conectarDB();
+    //Consultar para obtener los vendedores
+    $consulta = "SELECT * FROM vendedores";
+    $resultado=mysqli_query($db,$consulta);
+
     require '../../includes/funciones.php';
     incluirTemplate('header');
 
@@ -41,7 +45,7 @@
         if(!$precio){
             $errores[]="debes añadir un precio";
         }
-        if(strlen(!$descripcion)>10){
+        if(strlen($descripcion)<50){
             $errores[]="debes añadir descripcion y debe tener menos de 50 caracteres";
         }
         if(!$habitaciones){
@@ -127,8 +131,9 @@
                 <legend>Vendedor</legend>
 
                 <select name="vendedor">
-                    <option value="1">Rogelio</option>
-                    <option value="2">Ulises</option>
+                    <?php  while($vendedor= mysqli_fetch_assoc($resultado)):     ?>
+                        <option value=""><?php echo $vendedor['nombre']." ".$vendedor['apellido']; ?></option>
+                        <?php  endwhile;     ?>
                 </select>
             </fieldset><!-- 3!-->
 
