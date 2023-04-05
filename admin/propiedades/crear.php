@@ -9,7 +9,7 @@
     $db = conectarDB();
     //Consultar para obtener los vendedores
     $consulta = "SELECT * FROM vendedores";
-    $resultado=mysqli_query($db,$consulta);
+    $resultado=mysqli_query($db,$consulta); //de esta forma estamos consultando a la base de datos y resultado tiene todos los vendedores
 
     require '../../includes/funciones.php';
     incluirTemplate('header');
@@ -24,6 +24,8 @@
     $wc = '';
     $estacionamiento = '';
     $vendedorId = '';
+    $creado=date('Y/m/d');
+
     //Ejecutar el codigo despues de que el usuario envia el formulario
     
     if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -68,12 +70,14 @@
     //Revisar que el arreglo de errores este vacio.
     if(empty($errores)){
             //Insertar en la base de datos.
-            $query ="INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, vendedorId)
-            VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$vendedorId')";
+            $query ="INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
+            VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
             //echo $query;
             $resultado = mysqli_query($db,$query);
             if($resultado){
-                echo "Se ha enviado el formulario";
+                //echo "Se ha enviado el formulario";
+                //redireccionamos al usuario.
+                header("Location: ../index.php"); //  lo utilizamos para redireccionar a los usuarios.
               
         }
     }
@@ -111,28 +115,29 @@
                 <input type="file" id="imagen" accept="image/jpeg, image/png">
 
                 <label for="descripcion">Descripcion:</label>
-                <textarea id="descripcion" name="descripcion">value="<?php echo $descripcion; ?>"</textarea>
+                <textarea id="descripcion" name="descripcion" > <?php echo $descripcion; ?></textarea>
 
             </fieldset><!-- 1!-->
             <fieldset><!-- 2!-->
                 <legend>Informacion Propiedad</legend>
                 
                 <label for="habitaciones">Habitaciones:</label>
-                <input type="number"  id="habitaciones" name="habitaciones" placeholder="Ej: 3" min="1" max="9" <?php echo $habitaciones; ?>>
+                <input type="number"  id="habitaciones" name="habitaciones" placeholder="Ej: 3" min="1" max="9" value="<?php echo $habitaciones; ?>">
                 
                 <label for="wc">Baños:</label>
-                <input type="number"  id="wc" name="wc" placeholder="Ej: 4" min="1" max="9" <?php echo $wc; ?>>
+                <input type="number"  id="wc" name="wc" placeholder="Ej: 4" min="1" max="9" value="<?php echo $wc; ?>">
                 
                 <label for="estacionamiento">Estacionamiento:</label>
-                <input type="number"  id="estacionamiento" name="estacionamiento" placeholder="Ej: 2" min="1" max="9" <?php echo $estacionamiento; ?>>
+                <input type="number"  id="estacionamiento" name="estacionamiento" placeholder="Ej: 2" min="1" max="9" value="<?php echo $estacionamiento; ?>">
 
             </fieldset><!-- 2!-->
             <fieldset> <!-- 3!-->
                 <legend>Vendedor</legend>
 
                 <select name="vendedor">
-                    <?php  while($vendedor= mysqli_fetch_assoc($resultado)):     ?>
-                        <option value=""><?php echo $vendedor['nombre']." ".$vendedor['apellido']; ?></option>
+                <option value="">--Seleccione--</option>
+                    <?php  while($vendedor= mysqli_fetch_assoc($resultado)):     ?> <!-- Nos retorna un arreglo asociativo-->
+                        <option <?php echo $vendedorId === $vendedor['id'] ?'selected':''; ?> value="<?php echo $vendedor['id']; ?>"><?php echo $vendedor['nombre']." ".$vendedor['apellido']; ?></option>
                         <?php  endwhile;     ?>
                 </select>
             </fieldset><!-- 3!-->
