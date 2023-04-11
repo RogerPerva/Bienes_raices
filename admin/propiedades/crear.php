@@ -113,7 +113,7 @@
             if($resultado){
                 //echo "Se ha enviado el formulario";
                 //redireccionamos al usuario.
-                header("Location: ../index.php"); //  lo utilizamos para redireccionar a los usuarios.
+                header("Location: ../index.php?mensaje=1"); //  lo utilizamos para redireccionar a los usuarios.
               
         }
     }
