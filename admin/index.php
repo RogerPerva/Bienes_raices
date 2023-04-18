@@ -35,7 +35,7 @@
             $query = "DELETE FROM propiedades WHERE id = $id";
             $resultado = mysqli_query($db, $query);
             if($resultado){
-                header('Location:/bienesraices/admin/index.php');
+                header('Location:/bienesraices/admin/index.php?mensaje=3');
             }
         }
     
@@ -54,6 +54,8 @@
         <p class="alerta exito"> Anuncio creado correctamente</p>
         <?php elseif (intval ($resultado) === 2): ?>
             <p class="alerta exito"> Anuncio Actualizado correctamente</p>
+        <?php elseif (intval ($resultado) === 3): ?>
+            <p class="alerta exito"> Anuncio Eliminado correctamente</p>
         <?php endif ?>
         <a href="propiedades/crear.php" class="boton boton-verde"> Nueva propiedad</a>
 

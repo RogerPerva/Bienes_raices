@@ -2,29 +2,50 @@
 <?php
         require 'includes/funciones.php';
         incluirTemplate('header');
+
+        if($_SERVER['REQUEST_METHOD']=== 'GET'){
+        $id = $_GET['id'];
+        $id = filter_var($id, FILTER_VALIDATE_INT); //validamos que sea un numero
+        
+        if(is_int($id)){
+        require 'includes/config/database.php';
+        $db = conectarDB();
+        $query="SELECT * FROM propiedades WHERE id = $id";
+
+        $resultado = mysqli_query($db, $query);
+           if(!$resultado->num_rows){ // num_rows es parte del objeo que regresa msqli_query, y tiene dos valores, 1 y 0, 1 si tiene info y 0, si no.
+               header('Location:/bienesraices/index.php');
+           }
+        $propiedad = mysqli_fetch_assoc($resultado);
+            
+        }else{
+                header('Location:/bienesraices/index.php');
+            
+        }
+    
+    }
+       
+
    ?>
     
     <main class="contenedor seccion contenido-centrado">
-        <h1>Casa en venta frente al bosque</h1>
-        <picture>
-            <source srcset="build/img/destacada.webp" type="image/webp">
-            <source srcset="build/img/destacada.jpg" type="image/jpeg">
-            <img loading="lazy" src="build/img/destacada.jpg" alt="imagen de la propiedad">
-        </picture>
+        <h1> <?php echo $propiedad['titulo']; ?></h1>
+                    <img src="/bienesraices/imagenes/<?php echo $propiedad['imagen'];?>" alt="anuncio" loading="lazy">
+
         <div class="resumen-propiedad">
-            <p class="precio">$3,000,000.00  </p>
+            <p class="precio">$ <?php echo $propiedad['precio']; ?> </p>
             <ul class="iconos-caracteristicas">
                 <li>
                     <img src="build/img/icono_wc.svg" alt="icono wc" loaging="lazy">
-                    <p>3</p>
+                    <p> <?php echo $propiedad['wc']; ?></p>
                 </li>
                 <li>
                     <img src="build/img/icono_estacionamiento.svg" alt="icono estacionamiento" loaging="lazy">
-                    <p>3</p>
+                    <p> <?php echo $propiedad['estacionamiento']; ?></p>
                 </li>
                 <li>
                     <img src="build/img/icono_dormitorio.svg" alt="icono dormitorio" loaging="lazy">
-                    <p>4</p>
+                    <p> <?php echo $propiedad['habitaciones']; ?></p>
                 </li>
             </ul>
                 <p>
@@ -40,5 +61,6 @@
     </main>
     
     <?php 
+        mysqli_close($db);
         incluirTemplate('footer');
     ?>

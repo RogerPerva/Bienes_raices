@@ -25,18 +25,15 @@
                 <div class="derecha">
                 <img src="/bienesraices/build/img/dark-mode.svg" alt="dark-mode-boton" class="dark-mode-boton">
                     <nav class="navegacion">
-                        <a href="nosotros.php">Nosotros</a>
-                        <a href="anuncios.php">Anuncio</a>
-                        <a href="blog.php">Blog</a>
-                        <a href="contacto.php">Contacto</a>
+                        <a href="/bienesraices/nosotros.php">Nosotros</a>
+                        <a href="/bienesraices/anuncios.php">Anuncio</a>
+                        <a href="/bienesraices/blog.php">Blog</a>
+                        <a href="/bienesraices/contacto.php">Contacto</a>
                     </nav>
                 </div>
                 
             </div> <!--.barra-->
-            <?php  if($inicio){    ?>
-                    
-                    <h1>Venta de Casas y Departamentos exclusivos de lujo</h1>
-            <?php    }   ?>
+            <?php  echo $inicio?"<h1>Venta de Casas y Departamentos exclusivos de lujo</h1>":'';   ?>
             
         </div>
     </header>
