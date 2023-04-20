@@ -41,6 +41,8 @@ $db=conectarDB();
                     $_SESSION['usuario'] = $usuario['email'];
                     $_SESSION['login'] =true;
 
+                    header('Location: /bienesraices/admin/index.php'); //Una vez iniciado sesion redireccionamos a admin.
+
                     echo "<pre>";
                     var_dump($_SESSION);
                     echo "</pre>";

@@ -1,6 +1,13 @@
 <?php    ini_set('display_errors', 1);
          ini_set('display_startup_errors', 1);
          error_reporting(E_ALL);
+
+         if(!isset($_SESSION)){ //Validamos que no haya o que ya haya una sesion iniciada.
+             session_start();   // Si no la hay iniciamos una sesion
+            }
+            var_dump($_SESSION); // Mostramos la sesion que ya esta inciada
+            
+            $auth = $_SESSION['login'] ?? false;
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,11 +36,13 @@
                         <a href="/bienesraices/anuncios.php">Anuncio</a>
                         <a href="/bienesraices/blog.php">Blog</a>
                         <a href="/bienesraices/contacto.php">Contacto</a>
+                        <?php if($auth): ?>
+                            <a href="/bienesraices/cerrar-sesion.php" >Cerrar sesion</a>
+                        <?php endif; ?>
                     </nav>
                 </div>
                 
             </div> <!--.barra-->
             <?php  echo $inicio?"<h1>Venta de Casas y Departamentos exclusivos de lujo</h1>":'';   ?>
-            
         </div>
     </header>
