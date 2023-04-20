@@ -1,30 +1,30 @@
 
 <?php
-    require 'includes/config/database.php';
-    $db=conectarDB();
+require 'includes/config/database.php';
+$db=conectarDB();
 
     //Autenticar el usuario
 
     $errores=[]; //hacemos un arreglo para los errores
 
-    if($_SERVER['REQUEST_METHOD']==='POST'){
-        echo "<pre>";
-        var_dump($_POST);
-        echo "</pre>";
+    if($_SERVER['REQUEST_METHOD']==='POST'){ //requerimos el metodo post, es decir que se hayan mandado datos.
+    echo "<pre>";
+    var_dump($_POST);
+    echo "</pre>";
 
-        $email=mysqli_real_escape_string($db, filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)); //sanitisamos con real_escape y validamos que sea un email
-        $password=mysqli_real_escape_string($db,$_POST['password']);//sanitisamos los datos con mysqli_real_escape_string
+    $email=mysqli_real_escape_string($db, filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)); //sanitisamos con real_escape y validamos que sea un email
+    $password=mysqli_real_escape_string($db,$_POST['password']);//sanitisamos los datos con mysqli_real_escape_string
         if(!$email){
-            $errores[]="el email es obligatorio o no es valido";
+            $errores[]="el email es obligatorio o no es valido"; //si no hay email, manda este mensaje 
         }
         if(!$password){
-            $errores[]="el password es obligatorio";
+            $errores[]="el password es obligatorio"; //Si no hay password, manda este mensaje
         }
 
-        if(empty($errores)){
+        if(empty($errores)){ //si no hay errores entonces:
             //Revisar si el usuario existe.
             $query = "SELECT * FROM usuarios WHERE email = '$email'"; //la consulta que queremos realizar
-             $resultado = mysqli_query($db, $query); //Guardamos el resultado en $resultado, y hacemos la consulta madnando los datos de la base y la consulta.
+            $resultado = mysqli_query($db, $query); //Guardamos el resultado en $resultado, y hacemos la consulta madnando los datos de la base y la consulta.
 
             if($resultado->num_rows){ //Cuando es valida la consulta num_rows sera igual a 1 y cuando no, será igual a 0
                //Revisar si el password es correcto:
@@ -36,7 +36,14 @@
                 echo "</pre>";
                 if($auth){ //Validamos lo que tenemos almacenado dentro del auxiliar para utenticar
                     //El usuario esta autenticado
-                    header('Location: ');
+                    session_start();
+                    //llenar el arreglo de la sesion.
+                    $_SESSION['usuario'] = $usuario['email'];
+                    $_SESSION['login'] =true;
+
+                    echo "<pre>";
+                    var_dump($_SESSION);
+                    echo "</pre>";
                 }else{
                     $errores[]="Contraseña incorrecta";
                 }

@@ -7,7 +7,7 @@
 $email = "corre2@correo.com";
 $password = "1234567";
 
-$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+$passwordHash = password_hash($password, PASSWORD_DEFAULT); //Hasheamos la contraseña
 
 // echo "<pre>";
 // var_dump($passwordHash);

@@ -1,5 +1,12 @@
 
 <?php
+    require '../../includes/funciones.php';
+//Autenticacion ---------------------------------------------------------------------------------
+    $auth= estaAutenticado();
+    if(!$auth){ //si existe el login entonces se queda donde esta
+        header('Location: /bienesraices/index.php'); //si no lo redireccionamos al inciio
+    }
+  //AutenticacionFIN ---------------------------------------------------------------------------------
  //Base de datos:
     // require 'C:\apache\htdocs\bienesraices\includes\config\database.php';
     ini_set('display_errors', 1);
@@ -27,9 +34,6 @@
     //Consultar para obtener los vendedores
     $consulta = "SELECT * FROM vendedores";
     $resultado=mysqli_query($db,$consulta); //de esta forma estamos consultando a la base de datos y resultado tiene todos los vendedores
-
-    require '../../includes/funciones.php';
-    incluirTemplate('header');
     
     //Arreglo con mensajes de errores.
     $errores = [];
@@ -92,13 +96,11 @@
         if(!$vendedorId){
             $errores[]="debes añadir un vendedor";
         }
-        
         //Validar por tamaño (100kb maximo)
         $medida = 1000*1000;
         if($imagen['size']>$medida){
             $errores[]="La imagen es muy grande";
         }
-
         // echo "<pre>";
         // var_dump($errores);
         // echo "</pre>";
@@ -147,7 +149,7 @@
        
     }
 
-    
+    incluirTemplate('header');
     // echo phpinfo();
    ?>
     

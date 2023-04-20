@@ -1,5 +1,10 @@
 
 <?php
+      require '../includes/funciones.php';
+      $auth= estaAutenticado();
+    if(!$auth){ //si existe el login entonces se queda donde esta
+        header('Locatio:/bienesraices/index.php'); //si no lo redireccionamos al inciio
+    }
 
     //Importar la conexion
     ini_set('display_errors', 1);
@@ -42,7 +47,7 @@
     }
 
 
-    require '../includes/funciones.php';
+    
     incluirTemplate('header');
 
    ?>

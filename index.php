@@ -42,7 +42,7 @@
         ?>
 
         <div class="alinear-derecha">
-            <a href="/bienesraices/anuncions.php" class="boton-verde">Ver todas</a>
+            <a href="/bienesraices/anuncios.php" class="boton-verde">Ver todas</a>
         </div>
     </section>
 

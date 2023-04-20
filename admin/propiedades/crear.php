@@ -7,12 +7,18 @@
     error_reporting(E_ALL);
     require '../../includes/config/database.php';
     $db = conectarDB();
+    //autenticacion ---------------------------------------------------------------
+        require '../../includes/funciones.php';
+        $auth= estaAutenticado();
+        if(!$auth){ //si existe el login entonces se queda donde esta
+            header('Location:/bienesraices/index.php'); //si no lo redireccionamos al inciio
+        }
+
+  //---------------------------------------------------------------------------------
+
     //Consultar para obtener los vendedores
     $consulta = "SELECT * FROM vendedores";
     $resultado=mysqli_query($db,$consulta); //de esta forma estamos consultando a la base de datos y resultado tiene todos los vendedores
-
-    require '../../includes/funciones.php';
-    incluirTemplate('header');
 
     //Arreglo con mensajes de errores.
     $errores = [];
@@ -117,12 +123,9 @@
               
         }
     }
-
-
-       
     }
-
     
+    incluirTemplate('header');
     // echo phpinfo();
    ?>
     
