@@ -1,0 +1,17 @@
+{
+    "name": "ulises/bienesraices",
+    "description": "Proyecto creado con programacion orientada a objetos",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Rogelio U.",
+            "email": "ulisescodi@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\" : "./classes" 
+        }
+    }
+}
