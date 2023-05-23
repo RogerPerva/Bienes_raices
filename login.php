@@ -1,6 +1,6 @@
 
 <?php
-require 'includes/config/database.php';
+include './includes/app.php';
 $db=conectarDB();
 
     //Autenticar el usuario
@@ -56,7 +56,6 @@ $db=conectarDB();
     }
     
     //incluye el header
-    include './includes/funciones.php';
     incluirTemplate('header');
    ?>
     

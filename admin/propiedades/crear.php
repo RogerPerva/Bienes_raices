@@ -5,10 +5,21 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-    require '../../includes/config/database.php';
+
+    require '../../includes/app.php';
+    use App\Propiedad;
+
+    $propiedad = new propiedad; 
+
+    echo "<pre>";
+    var_dump($propiedad);
+    echo "</pre>";
+
+    exit;
+
     $db = conectarDB();
     //autenticacion ---------------------------------------------------------------
-        require '../../includes/funciones.php';
+        
         $auth= estaAutenticado();
         if(!$auth){ //si existe el login entonces se queda donde esta
             header('Location:/bienesraices/index.php'); //si no lo redireccionamos al inciio

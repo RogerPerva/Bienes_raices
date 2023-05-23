@@ -1,6 +1,6 @@
 
 <?php
-        require 'includes/funciones.php';
+        require 'includes/app.php';
         incluirTemplate('header');
 
         if($_SERVER['REQUEST_METHOD']=== 'GET'){
@@ -8,7 +8,8 @@
         $id = filter_var($id, FILTER_VALIDATE_INT); //validamos que sea un numero
         
         if(is_int($id)){
-        require 'includes/config/database.php';
+
+            
         $db = conectarDB();
         $query="SELECT * FROM propiedades WHERE id = $id";
 
