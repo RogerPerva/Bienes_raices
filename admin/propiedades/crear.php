@@ -8,22 +8,11 @@
 
     require '../../includes/app.php';
     use App\Propiedad;
-
-    $propiedad = new propiedad; 
-
-    echo "<pre>";
-    var_dump($propiedad);
-    echo "</pre>";
-
-    exit;
+      
 
     $db = conectarDB();
     //autenticacion ---------------------------------------------------------------
-        
-        $auth= estaAutenticado();
-        if(!$auth){ //si existe el login entonces se queda donde esta
-            header('Location:/bienesraices/index.php'); //si no lo redireccionamos al inciio
-        }
+    $auth= estaAutenticado();
 
   //---------------------------------------------------------------------------------
 
@@ -46,10 +35,11 @@
     //Ejecutar el codigo despues de que el usuario envia el formulario
     
     if($_SERVER['REQUEST_METHOD']==='POST'){
+        $propiedad = new Propiedad($_POST);
+     
+        // debuguear($propiedad);
 
-        // echo "<pre>";
-        // var_dump($_POST);
-        // echo "</pre>";
+        $propiedad->guardar();
 
         // echo "<pre>";
         // var_dump($_FILES);
@@ -62,7 +52,7 @@
         $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
         $wc = mysqli_real_escape_string($db, $_POST['wc']);
         $estacionamiento = mysqli_real_escape_string($db, $_POST['estacionamiento']);
-        $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
+        $vendedorId = mysqli_real_escape_string($db, $_POST['vendedorId']);
 
         //Asignar files hacia una variable.
         $imagen = $_FILES['imagen'];
@@ -119,14 +109,9 @@
          //Subir imagen
          move_uploaded_file($imagen['tmp_name'], $carpetaImagenes.$nombreImagen); //movemos el archivo temporal, al mover ya se guarda
          
-
-        
-        //Insertar en la base de datos.
-            $query ="INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
-            VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
-
             //echo $query;
             $resultado = mysqli_query($db,$query);
+            
             if($resultado){
                 //echo "Se ha enviado el formulario";
                 //redireccionamos al usuario.
@@ -184,7 +169,7 @@
             <fieldset> <!-- 3!-->
                 <legend>Vendedor</legend>
 
-                <select name="vendedor">
+                <select name="vendedorId">
                 <option value="">--Seleccione--</option>
                     <?php  while($vendedor= mysqli_fetch_assoc($resultado)):     ?> <!-- Nos retorna un arreglo asociativo-->
                         <option <?php echo $vendedorId === $vendedor['id'] ?'selected':''; ?> value="<?php echo $vendedor['id']; ?>"><?php echo $vendedor['nombre']." ".$vendedor['apellido']; ?></option>
