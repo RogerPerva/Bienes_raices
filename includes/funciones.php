@@ -12,11 +12,19 @@ function incluirTemplate(string $nombre, bool $inicio=false){
 
 function estaAutenticado(): bool{ //nos va a retornar un bool
     session_start();
-    $auth=$_SESSION['login']; //creamos $auth para almacenar el login
 
-    if($auth){ //si existe el login entonces se queda donde esta
-        return true;
+    if(!$_SESSION['login']){ //si existe el login entonces se queda donde esta
+        header('Location:/bienesraices/index.php');
     }
         return false;
     
+}
+
+function debuguear($variable){
+    
+    echo "<pre>";
+    var_dump($variable);
+    echo "</pre>";
+
+    exit;
 }
