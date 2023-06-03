@@ -34,7 +34,7 @@ class Propiedad{
         $this->wc = $args['wc'] ?? '';  
         $this->estacionamiento = $args['estacionamiento'] ?? '';  
         $this->creado =  date('Y/m/d');
-        $this->vendedorId = $args['vendedorId'] ?? '';  
+        $this->vendedorId = $args['vendedorId'] ?? 1;  
     }
     //-----------------------------****STATICS****------------------------------------------------------
     //definir la conexion a la BD
@@ -55,6 +55,15 @@ class Propiedad{
         
        return $resultado;
     }
+
+    public static function allVendedores(){
+        $query = "SELECT * FROM vendedores";
+        $resultado = self::consultarSQL($query);
+ 
+     // debuguear($resultado);
+         
+        return $resultado;
+     }
 
     public static function consultarSQL($query){
         //Consultar la base de datos
@@ -121,8 +130,8 @@ class Propiedad{
         $sanitizado = [];
 
         foreach($atributos as $key =>$value){ //key son los atributos y value son los valores del arreglo
-            $sanitizado[$key] = self::$db->escape_string($value); //sanitizamos caracteres especiales y codigo html
-            $sanitizado[$key] = self::$db->htmlspecialchars($value);
+           s( $sanitizado[$key] = self::$db->escape_string($value)); //sanitizamos caracteres especiales y codigo html
+            // $sanitizado[$key] = self::$db->htmlspecialchars($value);  Por alguna razon no es aceptada
         }
 
         return $sanitizado;

@@ -66,7 +66,7 @@
         $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
         $wc = mysqli_real_escape_string($db, $_POST['wc']);
         $estacionamiento = mysqli_real_escape_string($db, $_POST['estacionamiento']);
-        $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
+        $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']) ?? 1;
 
         //Asignar files hacia una variable.
         $imagen = $_FILES['imagen'];

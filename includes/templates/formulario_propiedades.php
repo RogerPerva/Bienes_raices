@@ -25,22 +25,16 @@
                     placeholder="Ej: 3"
                      min="1"
                       max="9"
-                       value="<?php echo s($habitaciones); ?>">
+                       value="<?php echo s($propiedad->habitaciones); ?>">
                 
                 <label for="wc">Baños:</label>
-                <input type="number"  id="wc" name="wc" placeholder="Ej: 4" min="1" max="9" value="<?php echo s($wc); ?>">
+                <input type="number"  id="wc" name="wc" placeholder="Ej: 4" min="1" max="9" value="<?php echo s($propiedad->wc); ?>">
                 
                 <label for="estacionamiento">Estacionamiento:</label>
-                <input type="number"  id="estacionamiento" name="estacionamiento" placeholder="Ej: 2" min="1" max="9" value="<?php echo s($estacionamiento); ?>">
+                <input type="number"  id="estacionamiento" name="estacionamiento" placeholder="Ej: 2" min="1" max="9" value="<?php echo s($propiedad->estacionamiento); ?>">
 
             </fieldset><!-- 2!-->
             <fieldset> <!-- 3!-->
-                <legend>Vendedor</legend>
-
-                <select name="vendedorId">
-                <option value="">--Seleccione--</option>
-                    <?php  foreach($propiedad as )= mysqli_fetch_assoc($resultado)):     ?> <!-- Nos retorna un arreglo asociativo-->
-                        <option <?php echo $vendedorId === $vendedor['id'] ?'selected':''; ?> value="<?php echo $vendedor['id']; ?>"><?php echo $vendedor['nombre']." ".$vendedor['apellido']; ?></option>
-                        <?php  endwhile;     ?>
-                </select>
+                <legend>Vendedor</legend> 
+                <!-- Se elimino (se trabajara en ello mas adelante ) -->
             </fieldset><!-- 3!-->

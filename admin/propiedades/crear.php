@@ -12,6 +12,7 @@
     use Intervention\Image\ImageManagerStatic as Image;
  
     $db = conectarDB();
+    $propiedad = new Propiedad;
     //autenticacion ---------------------------------------------------------------
     $auth= estaAutenticado();
 
