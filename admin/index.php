@@ -1,25 +1,15 @@
 
-<?php
-      require '../includes/funciones.php';
-      $auth= estaAutenticado();
-    if(!$auth){ //si existe el login entonces se queda donde esta
-        header('Location:/bienesraices/index.php'); //si no lo redireccionamos al inciio
-    }
-   
+<?php    //Importar la conexion
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+    require '../includes/app.php';
+    use App\Propiedad;
 
-    //Importar la conexion
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-    require '../includes/config/database.php';
-    $db = conectarDB();
-
-    //Escribir el query
-    $consulta = "SELECT * FROM propiedades";
+    $auth= estaAutenticado();
     
-    //Consultar la base de datos
-    $resultadoConsulta=mysqli_query($db,$consulta);
-
+    //Implementar un método para obtener todas las propiedades con ActiveRecord.
+    $propiedades =  Propiedad::all();
     //Mostrar los resultados 
     $resultado = $_GET['mensaje'] ?? null; //traemos de la url lo que tenga mensaje, lo que hace el doble signo de interrogacion es que si no esta adopta el null
 
@@ -77,24 +67,24 @@
             </thead>
 
             <tbody>
-                <?php while($propiedad = mysqli_fetch_assoc($resultadoConsulta)):?>
+                <?php foreach($propiedades as $key => $value):?>
                 <tr>
-                    <td><?php echo $propiedad['id']; ?></td>
-                    <td><?php echo $propiedad['titulo'];?></td>
-                    <td> <img src="../imagenes/<?php echo $propiedad['imagen'];?>" class="imagen-tabla" alt="imagen_casa"></td>
-                    <td>$<?php echo $propiedad['precio']; ?></td>
+                    <td><?php echo $value->id; ?></td>
+                    <td><?php echo $value->titulo;?></td>
+                    <td> <img src="../imagenes/<?php echo $value->imagen;?>" class="imagen-tabla" alt="imagen_casa"></td>
+                    <td>$<?php echo $value->precio; ?></td>
                     <td>
                         <form class="w-100" method="POST">
                             <?php
                             //Vamos a crear un input hidden para que se manden datos de manera que el usuarion no pueda verlo
                             ?>
-                            <input type="hidden" name="id" value="<?php echo $propiedad['id'] ?>">
+                            <input type="hidden" name="id" value="<?php echo $value->id ?>">
                             <input type="submit" value="Eliminar" class="boton-rojo-block">
                         </form>
-                        <a href="/bienesraices/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']?>" class="boton-amarillo-block">Actualizar</a>
+                        <a href="/bienesraices/admin/propiedades/actualizar.php?id=<?php echo $value->id?>" class="boton-amarillo-block">Actualizar</a>
                     </td>
                 </tr>
-                <?php endwhile;?>
+                <?php endforeach;?>
             </tbody>
         </table>
     </main>

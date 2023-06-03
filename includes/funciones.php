@@ -3,7 +3,8 @@
 
 define('TEMPLATES_URL',__DIR__.'/templates'); //definimos 'TEMPLATES_URL' como --{ __DIR__.'/templates' }-- y en @incluirTemplate
 define('FUNCIONES_URL',__DIR__.'funciones.php');
-
+define('CARPETA_IMAGENES', __DIR__.'/../imagenes/'); //definimos la ubicacion de la carpeta de imagenes
+define('FORMULARIO_PROPIEDADES', __DIR__.'/templates/formulario_propiedades.php');
 
 function incluirTemplate(string $nombre, bool $inicio=false){
         include TEMPLATES_URL."/{$nombre}.php";     //TEMPLATES_URL = __DIR__.'/templates' y el nombre del template lo traemos desde donde se manda a llamar la funcion
@@ -27,4 +28,11 @@ function debuguear($variable){
     echo "</pre>";
 
     exit;
+}
+
+//Escapar/sanitizar codigo html
+
+function s($html) : string{ //unicamente retorna string
+    $s = htmlspecialchars($html);
+    return $s;
 }

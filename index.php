@@ -2,6 +2,7 @@
    <?php
    
         require 'includes/app.php';
+        estaAutenticado();
         incluirTemplate('header', $inicio=true);
    ?>
     
