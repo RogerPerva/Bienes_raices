@@ -36,17 +36,18 @@ class Propiedad{
         $this->creado =  date('Y/m/d');
         $this->vendedorId = $args['vendedorId'] ?? 1;  
     }
-    //-----------------------------****STATICS****------------------------------------------------------
-    //definir la conexion a la BD
+    //-------------------------------------------------****STATICS****------------------------------------------------------
+    //definir la conexion a la BD--------------------------------------------------
     public static function setDB($database){    //metodo que puede ser llamado sin necesidad de crear un objeto nuevo (instanciar)
         self::$db = $database; //self hace referencia a los atributos de una misma clase.
      }
 
-    //Validacion
+    //Validacion--------------------------------------------------
        public static function getErrores(){ //metodo que puede ser llamado sin necesidad de crear un objeto nuevo (instanciar)
            return self::$errores;  //self porque esta etatico y retornamos errores.
        }
-    //Lista todas las propiedades
+
+    //Lista todas las propiedades--------------------------------------------------
     public static function all(){
        $query = "SELECT * FROM propiedades";
        $resultado = self::consultarSQL($query);
@@ -56,18 +57,18 @@ class Propiedad{
        return $resultado;
     }
 
-    public static function allVendedores(){
-        $query = "SELECT * FROM vendedores";
-        $resultado = self::consultarSQL($query);
- 
-     // debuguear($resultado);
-         
-        return $resultado;
-     }
+    //Busca un registro por us ID--------------------------------------------------
+    public static function find($id){
+           //Obtener los datos de la propiedad
+           $query = "SELECT * FROM propiedades WHERE id = $id";
+           $resultado  =self::consultarSQL($query);
+
+           return array_shift($resultado);
+    }
 
     public static function consultarSQL($query){
         //Consultar la base de datos
-        $resultado = self::$db->query($query);
+        $resultado = self::$db->query($query); //metodo query consulta a la base de datos
 
         //Iterar los resultados
         $array = [];
@@ -78,8 +79,9 @@ class Propiedad{
         //Liberar la memoria::: 
         $resultado->free();
         //Retornar los resultados
-        return $array;
+        return $array; //Regresamos array con objetos
     }
+
 
     //------------------------------****PROTECTEDS***----------------------------------------------------------------------------------------
     protected static function crearObjeto($registro){
@@ -90,10 +92,20 @@ class Propiedad{
                 $objeto->$key = $value;
             }
         }
-        return $objeto;
+        return $objeto;//regresamos objeto a ConsultarSQL()
     }
     //------------------------------****PUBLICS****----------------------------------------------------------------------------------------
     public function guardar(){
+        if(isset($this->id)){
+            //actualizar
+            $this->actualizar();
+        }else{
+            //creando un nuevo registro
+            $this->crear();
+        }
+    }
+    
+    public function crear(){
         //Sanitizar los datos.
         $atributos = $this->sanitizarAtributos();
 
@@ -110,6 +122,11 @@ class Propiedad{
 
         return $resultado;
      
+    }
+    public function actualizar(){
+        //Sanitizar los datos
+        $atributos = $this->sanitizarAtributos();
+        
     }
 
     //---------------------------------------------------------------------------------------
@@ -139,6 +156,15 @@ class Propiedad{
     //---------------------------------------------------------------------------------------
     //
     public function setImagen($imagen){
+        //Elimina la imagen previa:
+        if(isset($this->id)){ //Si existe un ID significa que estamos editando
+            //Comprobar si existe el archivo
+            $existeArchivo = file_exists(CARPETA_IMAGENES.$this->imagen);
+            if($existeArchivo){
+                unlink(CARPETA_IMAGENES.$this->imagen);
+            }
+        }
+        
         //Asignar al atributo de imagen el nombre de la imagen.
         if($imagen){
             $this->imagen=$imagen;
@@ -179,6 +205,14 @@ class Propiedad{
             return self::$errores;
     }
 
+    //Sincroniza el opbjeto en memoria con los cambios realizados por el usuario.
+    public function sincronizar($args = []){
+        foreach($args as $key => $value){
+            if(property_exists($this, $key) && !is_null($value)){
+                $this->$key = $value;
+            }
+        }
+    }
 
 
 
