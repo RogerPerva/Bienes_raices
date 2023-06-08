@@ -7,4 +7,5 @@ echo "<pre>";
 var_dump($_SESSION);
 echo "</pre>";
 
+session_destroy();
 header('Location: /bienesraices/index.php');

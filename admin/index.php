@@ -19,20 +19,8 @@
         $id = filter_var($id, FILTER_VALIDATE_INT); //validamos que sea un numero
         
         if($id){
-            //Eliminar el archivo de la propiedad (imagen)
-            $query = "SELECT imagen FROM propiedades WHERE id = $id";
-            $resultado = mysqli_query($db, $query);
-            $propiedad=mysqli_fetch_assoc($resultado);
-
-            unlink('../imagenes/'.$propiedad['imagen']);
-
-            
-            //Eliminamos la propiedad
-            $query = "DELETE FROM propiedades WHERE id = $id";
-            $resultado = mysqli_query($db, $query);
-            if($resultado){
-                header('Location:/bienesraices/admin/index.php?mensaje=3');
-            }
+            $propiedad = Propiedad::find($id);
+            $propiedad->eliminar();
         }
     
     }

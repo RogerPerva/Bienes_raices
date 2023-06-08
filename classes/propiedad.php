@@ -83,7 +83,7 @@ class Propiedad{
     }
 
 
-    //------------------------------****PROTECTEDS***----------------------------------------------------------------------------------------
+    //------------------------------------------------------****PROTECTEDS***----------------------------------------------------------------------------------------
     protected static function crearObjeto($registro){
         $objeto = new self;
 
@@ -94,7 +94,19 @@ class Propiedad{
         }
         return $objeto;//regresamos objeto a ConsultarSQL()
     }
-    //------------------------------****PUBLICS****----------------------------------------------------------------------------------------
+    //--------------------------------------------------****PUBLICS****----------------------------------------------------------------------------------------
+    public function eliminar(){
+           
+        //Eliminamos la propiedad
+        $query = "DELETE FROM propiedades WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1 ";
+        $resultado = self::$db->query($query);
+        
+        if($resultado){
+            $this->borrarImagen();
+            header('Location:/bienesraices/admin/index.php?mensaje=3');
+        }
+
+    }
     public function guardar(){
         if(isset($this->id)){
             //actualizar
@@ -119,14 +131,29 @@ class Propiedad{
 
 
         $resultado = self::$db->query($query);
-
-        return $resultado;
-     
+      
+        
     }
     public function actualizar(){
         //Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
-        
+
+        $valores = [];
+        foreach($atributos as $key => $value){
+            $valores [] = "$key='$value'";
+        }
+        $query=" UPDATE propiedades SET ";
+        $query.=join(', ', $valores); //join nos convierte el array a string.
+        $query.=" WHERE id = '".self::$db->escape_string($this->id)."' ";
+        $query.= " LIMIT 1 ";
+
+        $resultado = self::$db->query($query);
+        if($resultado){
+            //echo "Se ha enviado el formulario";
+            //redireccionamos al usuario.
+            header("Location: ../index.php?mensaje=2"); //  lo utilizamos para redireccionar a los usuarios.
+     } 
+
     }
 
     //---------------------------------------------------------------------------------------
@@ -158,11 +185,7 @@ class Propiedad{
     public function setImagen($imagen){
         //Elimina la imagen previa:
         if(isset($this->id)){ //Si existe un ID significa que estamos editando
-            //Comprobar si existe el archivo
-            $existeArchivo = file_exists(CARPETA_IMAGENES.$this->imagen);
-            if($existeArchivo){
-                unlink(CARPETA_IMAGENES.$this->imagen);
-            }
+          $this->borrarImagen();
         }
         
         //Asignar al atributo de imagen el nombre de la imagen.
@@ -170,6 +193,16 @@ class Propiedad{
             $this->imagen=$imagen;
 
         }
+    }
+    //---------------------------------------------------------------------------------------
+
+    //Eliminar el archivo::
+    public function borrarImagen(){
+    //Comprobar si existe el archivo
+    $existeArchivo = file_exists(CARPETA_IMAGENES.$this->imagen);
+    if($existeArchivo){
+        unlink(CARPETA_IMAGENES.$this->imagen);
+  }
     }
     //---------------------------------------------------------------------------------------
     //
@@ -208,7 +241,7 @@ class Propiedad{
     //Sincroniza el opbjeto en memoria con los cambios realizados por el usuario.
     public function sincronizar($args = []){
         foreach($args as $key => $value){
-            if(property_exists($this, $key) && !is_null($value)){
+            if(property_exists($this, $key) && !is_null($value)){ // $this mantiene el objeto en memoria y key es la copia del objeto que invoco el metodo.
                 $this->$key = $value;
             }
         }
