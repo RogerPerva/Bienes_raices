@@ -54,14 +54,6 @@
          $image->save(CARPETA_IMAGENES.$nombreImagen);
     //Guarda la imagen en la base de datos.
          $resultado = $propiedad->guardar();
-        
-         //Mensaje de exito o error
-            if($resultado){
-                //echo "Se ha enviado el formulario";
-                //redireccionamos al usuario.
-                header("Location: ../index.php?mensaje=1"); //  lo utilizamos para redireccionar a los usuarios.
-              
-        }
     }
     }
     

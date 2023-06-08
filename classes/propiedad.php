@@ -25,7 +25,7 @@ class Propiedad{
     public $vendedorId;
 
     public function __construct($args =[]){
-        $this->id = $args['id'] ?? '';  
+        $this->id = $args['id'] ?? NULL;  
         $this->titulo = $args['titulo'] ?? '';  
         $this->precio = $args['precio'] ?? '';  
         $this->imagen = $args['imagen'] ?? '';  
@@ -108,7 +108,7 @@ class Propiedad{
 
     }
     public function guardar(){
-        if(isset($this->id)){
+        if(!is_null($this->id)){
             //actualizar
             $this->actualizar();
         }else{
@@ -129,9 +129,15 @@ class Propiedad{
         $query .= join("', '", array_values($atributos)); //array_values nos permite acceder a los valores del arreglo.
         $query .= " ') ";
 
-
         $resultado = self::$db->query($query);
       
+         //Mensaje de exito o error
+            if($resultado){
+                //echo "Se ha enviado el formulario";
+                //redireccionamos al usuario.
+                header("Location: ../index.php?mensaje=1"); //  lo utilizamos para redireccionar a los usuarios.
+              
+        }
         
     }
     public function actualizar(){
@@ -184,7 +190,7 @@ class Propiedad{
     //
     public function setImagen($imagen){
         //Elimina la imagen previa:
-        if(isset($this->id)){ //Si existe un ID significa que estamos editando
+        if(!is_null($this->id)){ //Si existe un ID significa que estamos editando
           $this->borrarImagen();
         }
         

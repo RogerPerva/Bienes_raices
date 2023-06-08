@@ -5,7 +5,7 @@
          if(!isset($_SESSION)){ //Validamos que no haya o que ya haya una sesion iniciada.
              session_start();   // Si no la hay iniciamos una sesion
             }
-            var_dump($_SESSION); // Mostramos la sesion que ya esta inciada
+           //  var_dump($_SESSION); // Mostramos la sesion que ya esta inciada
             
             $auth = $_SESSION['login'] ?? false;
     ?>

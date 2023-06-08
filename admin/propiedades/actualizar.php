@@ -32,9 +32,9 @@ use Intervention\Image\ImageManagerStatic as Image;
        
            //Asignamos los resultados
        
-           echo "<pre>";
-           var_dump($propiedad);
-           echo "</pre>";
+        //    echo "<pre>";
+        //    var_dump($propiedad);
+        //    echo "</pre>";
 //-------------------------------------------------------------------------
     //Consultar para obtener los vendedores
     $consulta = "SELECT * FROM vendedores";
