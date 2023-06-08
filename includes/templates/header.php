@@ -39,6 +39,9 @@
                         <?php if($auth): ?>
                             <a href="/bienesraices/cerrar-sesion.php" >Cerrar sesion</a>
                         <?php endif; ?>
+                        <?php if(!$auth): ?>
+                            <a href="/bienesraices/login.php" >Iniciar sesion</a>
+                        <?php endif; ?>
                     </nav>
                 </div>
                 

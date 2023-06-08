@@ -1,8 +1,9 @@
 
    <?php
    
-        require 'includes/app.php';
-        estaAutenticado();
+   include './includes/app.php';
+        
+
         incluirTemplate('header', $inicio=true);
    ?>
     
