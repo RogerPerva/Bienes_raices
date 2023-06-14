@@ -6,7 +6,6 @@ class Propiedad extends ActiveRecord{
     protected static $columnasDB = ['id', 'titulo','precio','imagen', 'descripcion','habitaciones','wc','estacionamiento', 'creado','vendedorId'];
     protected static $tabla ='propiedades';
 
-    
     public $id;
     public $titulo;
     public $precio;
@@ -18,4 +17,17 @@ class Propiedad extends ActiveRecord{
     public $creado;
     public $vendedorId;
     
+    public function __construct($args =[]){
+        $this->id = $args['id'] ?? NULL;  
+        $this->titulo = $args['titulo'] ?? '';  
+        $this->precio = $args['precio'] ?? '';  
+        $this->imagen = $args['imagen'] ?? '';  
+        $this->descripcion = $args['descripcion'] ?? '';  
+        $this->habitaciones = $args['habitaciones'] ?? '';  
+        $this->wc = $args['wc'] ?? '';  
+        $this->estacionamiento = $args['estacionamiento'] ?? '';  
+        $this->creado =  date('Y/m/d');
+        $this->vendedorId = $args['vendedorId'] ?? '';  
+    }
+
 }

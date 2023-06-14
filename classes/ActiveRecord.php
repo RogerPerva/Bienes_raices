@@ -16,29 +16,6 @@ class ActiveRecord{
     //Errores o validacion.
     protected static $errores = []; //arreglo vacio que vamos a ir llenando en caso de que haya errores.
 
-    public $id;
-    public $titulo;
-    public $precio;
-    public $imagen;
-    public $descripcion;
-    public $habitaciones;
-    public $wc;
-    public $estacionamiento;
-    public $creado;
-    public $vendedorId;
-
-    public function __construct($args =[]){
-        $this->id = $args['id'] ?? NULL;  
-        $this->titulo = $args['titulo'] ?? '';  
-        $this->precio = $args['precio'] ?? '';  
-        $this->imagen = $args['imagen'] ?? '';  
-        $this->descripcion = $args['descripcion'] ?? '';  
-        $this->habitaciones = $args['habitaciones'] ?? '';  
-        $this->wc = $args['wc'] ?? '';  
-        $this->estacionamiento = $args['estacionamiento'] ?? '';  
-        $this->creado =  date('Y/m/d');
-        $this->vendedorId = $args['vendedorId'] ?? 1;  
-    }
     //-------------------------------------------------****STATICS****------------------------------------------------------
     //definir la conexion a la BD--------------------------------------------------
     public static function setDB($database){    //metodo que puede ser llamado sin necesidad de crear un objeto nuevo (instanciar)
@@ -91,7 +68,7 @@ class ActiveRecord{
 
     //------------------------------------------------------****PROTECTEDS***----------------------------------------------------------------------------------------
     protected static function crearObjeto($registro){
-        $objeto = new self;
+        $objeto = new static;
 
         foreach($registro as $key => $value){ //recorre el arreglo asociativo.
             if(property_exists($objeto, $key)){ //"La función property_exists() verifica si una propiedad con el nombre especificado ($key) existe en el objeto ($objeto)."
