@@ -5,11 +5,14 @@
         error_reporting(E_ALL);
     require '../includes/app.php';
     use App\Propiedad;
+    use App\Vendedor;
 
     $auth= estaAutenticado();
     
     //Implementar un método para obtener todas las propiedades con ActiveRecord.
     $propiedades =  Propiedad::all();
+    $vendedores = Vendedor::all();
+
     //Mostrar los resultados 
     $resultado = $_GET['mensaje'] ?? null; //traemos de la url lo que tenga mensaje, lo que hace el doble signo de interrogacion es que si no esta adopta el null
 

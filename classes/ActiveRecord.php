@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+//Esta es la clase padre, antes llamada propiedad.
 
 class ActiveRecord{
     //Base de datos:
@@ -8,8 +9,10 @@ class ActiveRecord{
 
     protected static $db;  //Protegido porque solo se puede acceder desde la clase y static porque no se isntancia ya que son los mimos datos siempre
     //Este no se va a reescribir nunca.
-    protected static $columnasDB = ['id', 'titulo','precio','imagen', 'descripcion','habitaciones','wc','estacionamiento', 'creado','vendedorId'];
+    protected static $columnasDB = [''];
     
+    protected static $tabla ='';
+
     //Errores o validacion.
     protected static $errores = []; //arreglo vacio que vamos a ir llenando en caso de que haya errores.
 
@@ -47,9 +50,11 @@ class ActiveRecord{
            return self::$errores;  //self porque esta etatico y retornamos errores.
        }
 
-    //Lista todas las propiedades--------------------------------------------------
+    //Lista todas las $tablas--------------------------------------------------
     public static function all(){
-       $query = "SELECT * FROM propiedades";
+     //STATIC va a heredar el metodo y va a buscar dentro de la clase donde se esta llamando el metodo, es decir, si lo ejecutamos de propiedad $tabla tendra la info del valor de propiedad.
+       $query = "SELECT * FROM ". static::$tabla; 
+    //    debuguear($query);
        $resultado = self::consultarSQL($query);
 
     // debuguear($resultado);
@@ -60,7 +65,8 @@ class ActiveRecord{
     //Busca un registro por us ID--------------------------------------------------
     public static function find($id){
            //Obtener los datos de la propiedad
-           $query = "SELECT * FROM propiedades WHERE id = $id";
+           $tabla =static::$tabla; //asi asignamos el nombre de la tabla, ya sea vendedores o propiedades.
+           $query = "SELECT * FROM ". static::$tabla . " WHERE id = $id";
            $resultado  =self::consultarSQL($query);
 
            return array_shift($resultado);
@@ -95,10 +101,12 @@ class ActiveRecord{
         return $objeto;//regresamos objeto a ConsultarSQL()
     }
     //--------------------------------------------------****PUBLICS****----------------------------------------------------------------------------------------
+    //Eliminar el registr
     public function eliminar(){
-           
-        //Eliminamos la propiedad
-        $query = "DELETE FROM propiedades WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1 ";
+    //Elimina el registro respectivo de la tabla           
+        $query = "DELETE FROM " . static::$tabla;
+        $query.= " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        
         $resultado = self::$db->query($query);
         
         if($resultado){
@@ -121,9 +129,9 @@ class ActiveRecord{
         //Sanitizar los datos.
         $atributos = $this->sanitizarAtributos();
 
-
+        // $tabla =static::$tabla;
         //Insertar en la base de datos.
-        $query ="INSERT INTO propiedades ( ";
+        $query ="INSERT INTO ". static::$tabla . " ( ";
         $query .= join(', ', array_keys($atributos)); //array_keys nos permite acceder a las llaves (keys) de un arreglo y join nos vuelve el arreglo a string
         $query .=" ) VALUES (' "; 
         $query .= join("', '", array_values($atributos)); //array_values nos permite acceder a los valores del arreglo.
@@ -148,7 +156,8 @@ class ActiveRecord{
         foreach($atributos as $key => $value){
             $valores [] = "$key='$value'";
         }
-        $query=" UPDATE propiedades SET ";
+
+        $query=" UPDATE ". static::$tabla . " SET ";
         $query.=join(', ', $valores); //join nos convierte el array a string.
         $query.=" WHERE id = '".self::$db->escape_string($this->id)."' ";
         $query.= " LIMIT 1 ";
