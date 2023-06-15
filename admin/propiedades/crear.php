@@ -9,18 +9,16 @@
 
     require '../../includes/app.php';
     use App\Propiedad;
-    use Intervention\Image\ImageManagerStatic as Image;
- 
-    $db = conectarDB();
+use App\Vendedor;
+use Intervention\Image\ImageManagerStatic as Image;
+
+    estaAutenticado();
+
     $propiedad = new Propiedad;
-    //autenticacion ---------------------------------------------------------------
-    $auth= estaAutenticado();
+    //Consulta para obtener todos los vendedores.
+    $vendedores = Vendedor::all();
 
   //---------------------------------------------------------------------------------
-
-    //Consultar para obtener los vendedores
-    $consulta = "SELECT * FROM vendedores";
-    $resultado=mysqli_query($db,$consulta); //de esta forma estamos consultando a la base de datos y resultado tiene todos los vendedores
 
     //Arreglo con mensajes de errores.---------------------------------------
     $errores = Propiedad::getErrores();

@@ -1,5 +1,5 @@
 <?php
-
+//marca errores debido a una extension pero el codigo es funcional <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<-----------------------------------
 namespace App;
 //Esta es la clase padre, antes llamada propiedad.
 
@@ -16,7 +16,10 @@ class ActiveRecord{
     //Errores o validacion.
     protected static $errores = []; //arreglo vacio que vamos a ir llenando en caso de que haya errores.
 
-    //-------------------------------------------------****STATICS****------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------****METODOS****------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------****STATICS****------------------------------------------------
     //definir la conexion a la BD--------------------------------------------------
     public static function setDB($database){    //metodo que puede ser llamado sin necesidad de crear un objeto nuevo (instanciar)
         self::$db = $database; //self hace referencia a los atributos de una misma clase.

@@ -40,5 +40,16 @@
             </fieldset><!-- 2!-->
             <fieldset> <!-- 3!-->
                 <legend>Vendedor</legend> 
-                <!-- Se elimino (se trabajara en ello mas adelante ) -->
+                <label for="vededor">Vendedor</label>
+                <select name="propiedad[vendedorId]" id="vendedor">
+                    <option selected value="">-- Seleccione --</option>
+                <?php foreach($vendedores as $vendedor): ?>
+                    <option
+                    <?php //Para guardar el vendedor que seleccionamos lo tomamos de $propiedad que es el objeto que estamos llenando.?>
+                        <?php echo $propiedad->vendedorId === $vendedor->id ? 'selected' : ''?>
+                     value="<?php echo s($vendedor->id); ?>">
+                                    <?php echo s($vendedor->nombre); ?>
+                    </option>
+                <?php endforeach; ?>
+                    </select>
             </fieldset><!-- 3!-->
