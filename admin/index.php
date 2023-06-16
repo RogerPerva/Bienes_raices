@@ -19,12 +19,25 @@
 
     //VALIDAMOS CON REQUEST_METHOD, para que no nos aparezca como undefined. El post no existe hasta que se mande el request_method
     if($_SERVER['REQUEST_METHOD']=== 'POST'){
-        $id = $_POST['id'];
-        $id = filter_var($id, FILTER_VALIDATE_INT); //validamos que sea un numero
-        
-        if($id){
-            $propiedad = Propiedad::find($id);
-            $propiedad->eliminar();
+    $id = $_POST['id'];
+      
+    $id = filter_var($id, FILTER_VALIDATE_INT); //validamos que sea un numero
+    
+    if($id){
+
+        $tipo=$_POST['tipo'];
+        if(validarTipoContenido($tipo)){
+            //Compara lo que vamos a eliminar
+            if($tipo === 'vendedor'){
+                $vendedor = Vendedor::find($id);
+                $vendedor->eliminar();
+            }else{
+                $propiedad = Propiedad::find($id);
+                $propiedad->eliminar();
+            
+            }
+        }
+
         }
     
     }
@@ -46,6 +59,8 @@
             <p class="alerta exito"> Anuncio Eliminado correctamente</p>
         <?php endif ?>
         <a href="propiedades/crear.php" class="boton boton-verde"> Nueva propiedad</a>
+        <a href="vendedores/crear.php" class="boton boton-amarillo"> Nuevo(a) vendedor</a>
+        <h2>Propiedades</h2>
 
         <table class="propiedades">
             <thead>
@@ -71,9 +86,44 @@
                             //Vamos a crear un input hidden para que se manden datos de manera que el usuarion no pueda verlo
                             ?>
                             <input type="hidden" name="id" value="<?php echo $value->id ?>">
+                            <input type="hidden" name="tipo" value="propiedad">
                             <input type="submit" value="Eliminar" class="boton-rojo-block">
                         </form>
                         <a href="/bienesraices/admin/propiedades/actualizar.php?id=<?php echo $value->id?>" class="boton-amarillo-block">Actualizar</a>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+            </tbody>
+        </table>
+
+        <h2>Vendedores</h2>
+        <table class="propiedades">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Completo</th>
+                   
+                    <th>Telefono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach($vendedores as $key => $value):?>
+                <tr>
+                    <td><?php echo $value->id; ?></td>
+                    <td><?php echo $value->nombre . " ". $value->apellido;?></td>
+                    <td><?php echo $value->telefono; ?></td>
+                    <td>
+                        <form class="w-100" method="POST">
+                            <?php
+                            //Vamos a crear un input hidden para que se manden datos de manera que el usuarion no pueda verlo
+                            ?>
+                            <input type="hidden" name="id" value="<?php echo $value->id ?>">
+                            <input type="hidden" name="tipo" value="vendedor">
+                            <input type="submit" value="Eliminar" class="boton-rojo-block">
+                        </form>
+                        <a href="/bienesraices/admin/vendedores/actualizar.php?id=<?php echo $value->id?>" class="boton-amarillo-block">Actualizar</a>
                     </td>
                 </tr>
                 <?php endforeach;?>

@@ -3,6 +3,7 @@
  //Base de datos: ya esta en la clase App.
 
 use App\Propiedad;
+use App\Vendedor;
 use Intervention\Image\ImageManagerStatic as Image;
 
     require '../../includes/app.php';
@@ -29,17 +30,11 @@ use Intervention\Image\ImageManagerStatic as Image;
 
            //Obtener los datos de la propiedad:
            $propiedad = Propiedad::find($id);
-       
-           //Asignamos los resultados
-       
-        //    echo "<pre>";
-        //    var_dump($propiedad);
-        //    echo "</pre>";
+           // Consulta para obtener todos los vendedores.
+           $vendedores = Vendedor::all();
+     
 //-------------------------------------------------------------------------
-    //Consultar para obtener los vendedores
-    $consulta = "SELECT * FROM vendedores";
-    $resultado=mysqli_query($db,$consulta); //de esta forma estamos consultando a la base de datos y resultado tiene todos los vendedores
-    
+
     //Arreglo con mensajes de errores.
     $errores = Propiedad::getErrores();
 
@@ -69,8 +64,12 @@ $propiedad->setImagen($nombreImagen);
 $propiedad->guardar();
     //Revisar que el arreglo de errores este vacio.
     if(empty($errores)){
+
+        if($_FILES['propiedad']['tmp_name']['imagen']){
         //Alamacenar imagen en disco duro
         $image->save(CARPETA_IMAGENES.$nombreImagen);
+        }
+
         $propiedad->guardar();
     }
     

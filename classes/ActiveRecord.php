@@ -27,7 +27,8 @@ class ActiveRecord{
 
     //Validacion--------------------------------------------------
        public static function getErrores(){ //metodo que puede ser llamado sin necesidad de crear un objeto nuevo (instanciar)
-           return self::$errores;  //self porque esta etatico y retornamos errores.
+           
+        return static::$errores;  //Cambiamos de self a static porque sera respectivo de cada clase (propiedad o vendedor)
        }
 
     //Lista todas las $tablas--------------------------------------------------
@@ -59,7 +60,7 @@ class ActiveRecord{
         //Iterar los resultados
         $array = [];
         while($registro = $resultado->fetch_assoc()){
-            $array[] = self::crearObjeto($registro);
+            $array[] = static::crearObjeto($registro);
 
         }
         //Liberar la memoria::: 
@@ -155,7 +156,7 @@ class ActiveRecord{
     //Identificar y unir los atributos de la base de datos
     public function atributos(){
         $atributos = [];
-        foreach(self::$columnasDB as $columna):
+        foreach(static::$columnasDB as $columna):
             if($columna === 'id') continue; // Ignoramos porque no tenemos esa informacion.
             $atributos[$columna]=$this->$columna;
         endforeach;
@@ -202,35 +203,9 @@ class ActiveRecord{
     //---------------------------------------------------------------------------------------
     //
     public function validar(){
-        
- 
-        if(!$this->titulo){
-            self::$errores[]="debes añadir un titulo";
-        }
-        if(!$this->precio){
-            self::$errores[]="debes añadir un precio";
-        }
-        if(strlen($this->descripcion)<50){
-            self::$errores[]="debes añadir descripcion y debe tener menos de 50 caracteres";
-        }
-        if(!$this->habitaciones){
-            self::$errores[]="debes añadir numero de habitaciones";
-        }
-        if(!$this->wc){
-            self::$errores[]="debes añadir WC";
-        }
-        if(!$this->estacionamiento){
-            self::$errores[]="debes añadir estacionamiento";
-        }
-        if(!$this->vendedorId){
-            self::$errores[]="debes añadir un vendedor";
-        }
-        
-        if(!$this->imagen) {
-            self::$errores[]="La imagen es obligatoria.";
-        }
-   
-            return self::$errores;
+        static::$errores = [];
+            return static::$errores;
+
     }
 
     //Sincroniza el opbjeto en memoria con los cambios realizados por el usuario.

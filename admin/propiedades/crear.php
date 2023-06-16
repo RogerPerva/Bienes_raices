@@ -12,6 +12,7 @@
 use App\Vendedor;
 use Intervention\Image\ImageManagerStatic as Image;
 
+
     estaAutenticado();
 
     $propiedad = new Propiedad;
