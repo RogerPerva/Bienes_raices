@@ -4,6 +4,8 @@
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
     require '../includes/app.php';
+
+    //Importar las clases 
     use App\Propiedad;
     use App\Vendedor;
 
@@ -19,6 +21,7 @@
 
     //VALIDAMOS CON REQUEST_METHOD, para que no nos aparezca como undefined. El post no existe hasta que se mande el request_method
     if($_SERVER['REQUEST_METHOD']=== 'POST'){
+        //Validar ID.
     $id = $_POST['id'];
       
     $id = filter_var($id, FILTER_VALIDATE_INT); //validamos que sea un numero
@@ -34,13 +37,10 @@
             }else{
                 $propiedad = Propiedad::find($id);
                 $propiedad->eliminar();
-            
             }
         }
-
-        }
-    
     }
+}
 
 
     
@@ -51,13 +51,11 @@
     <main class="contenedor seccion dark-mode">
         <h1>Administrador de bienes raices</h1>
         <?php 
-        if(intval ($resultado) === 1): ?>
-        <p class="alerta exito"> Anuncio creado correctamente</p>
-        <?php elseif (intval ($resultado) === 2): ?>
-            <p class="alerta exito"> Anuncio Actualizado correctamente</p>
-        <?php elseif (intval ($resultado) === 3): ?>
-            <p class="alerta exito"> Anuncio Eliminado correctamente</p>
-        <?php endif ?>
+            $mensaje = mostrarNotificacion( intval($resultado) ); 
+        if($mensaje){  ?>
+            <p class="alerta exito"><?php echo s($mensaje) ?></p>
+        <?php }   ?>
+
         <a href="propiedades/crear.php" class="boton boton-verde"> Nueva propiedad</a>
         <a href="vendedores/crear.php" class="boton boton-amarillo"> Nuevo(a) vendedor</a>
         <h2>Propiedades</h2>

@@ -11,7 +11,15 @@ $vendedor = new Vendedor;
 $errores = Vendedor::getErrores();
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    
+    //Crear una nueva instancia.
+    $vendedor = new Vendedor($_POST['vendedor']);
+
+    //Validar que no haya campos vacios.
+    $errores= $vendedor->validar();
+    if(empty($errores)){
+        $vendedor->guardar();
+    }
+
 }
 
 incluirTemplate('header');
@@ -19,7 +27,7 @@ incluirTemplate('header');
 ?>
 
 <main class="contenedor seccion">
-        <h1>Registrar Vendedores</h1>
+        <h1>Registrar Vendedor(a)</h1>
         <a href="../index.php" class="boton boton-verde"> Volver</a>
         
         <?php            foreach($errores as $error): ?>

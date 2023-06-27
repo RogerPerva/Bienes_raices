@@ -7,11 +7,12 @@
     <label for="apellido">Apellido:</label>
     <input type="text" name="vendedor[apellido]" placeholder="Apellido(s) del vendedor" value="<?php echo s($vendedor->apellido); ?>">
 
-    <label for="imagen">Imagen:</label>
-    <input type="file" id="imagen" accept="image/jpeg, image/png" name="vendedor[imagen]">
-
-    <!-- <?php // if ($vendedor->imagen) { ?>
-        <img src="/imagenes/<?php // echo $vendedor->imagen ?>" class="imagen-small">
-    <?php //} ?> -->
 
 </fieldset><!-- 1!-->
+
+<fieldset>
+    <legend> Informacion extra</legend>
+    <label for="telefono">Telefono:</label>
+    <input type="text" name="vendedor[telefono]" placeholder="Telefono del vendedor" value="<?php echo s($vendedor->telefono); ?>">
+
+</fieldset>
