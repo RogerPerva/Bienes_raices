@@ -43,6 +43,18 @@ class ActiveRecord{
        return $resultado;
     }
 
+    
+    //Obtiene determinado numero de registros.
+    public static function get($cantidad){
+        $query = "SELECT * FROM ". static::$tabla . " LIMIT " . $cantidad; 
+     //    debuguear($query);
+        $resultado = self::consultarSQL($query);
+ 
+     // debuguear($resultado);
+         
+        return $resultado;
+    }
+
     //Busca un registro por us ID--------------------------------------------------
     public static function find($id){
            //Obtener los datos de la propiedad
